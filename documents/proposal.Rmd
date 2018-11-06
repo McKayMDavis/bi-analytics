@@ -1,0 +1,76 @@
+---
+title: "BI/Analytics Project"
+output: pdf_document
+---
+
+Deliverables
+Week 7:
+1.	Project Proposal
+a.	Together
+2.	Design Document
+a.	Brenden
+3.	Ensure installation of R is possible
+a.	McKay
+4.	Risks
+a.	McKay
+
+Week 8:
+1.	2 cleaning methods each
+a.	Filtering (NA’s etc)
+i.	Brenden
+b.	Remove unnecessary columns
+i.	Brenden
+c.	Editing ambiguous columns
+i.	McKay
+d.	Joins
+i.	McKay
+2.	1 profiling example each
+a.	Sub-setting
+i.	Brenden
+b.	Stats tables
+i.	McKay
+3.	Installing R and RStudio
+4.	Learning basics of R
+5.	Pros and cons of cleaning and profiling in R
+a.	Together
+6.	List of things we learned
+
+Week 9:
+1.	Write up pros and cons of R to Excel
+2.	2 patterns/visualizations/outliers each
+a.	Pairs plots
+i.	McKay
+b.	Boxplots
+i.	McKay
+c.	Bar-charts
+i.	Brenden
+d.	Outliers
+i.	Brenden
+3.	Pros and cons
+4.	List of things we learned
+
+Week 10:
+1.	Pros and cons of R
+2.	List of things we learned
+3.	1 optimizing/forecasting/predicting model each
+a.	Trend prediction (shootings increasing by year in certain areas/races)
+i.	Brenden
+b.	Full regression analysis
+i.	McKay
+
+Description of Problem
+With the hot topic of gun related crimes, we wanted to look at variables that contribute to a person being killed by a gun. We were specifically curious to look at school shootings, race fueled shootings, age, gender, etc.
+
+Dataset
+https://www.kaggle.com/hakabuk/gun-deaths-in-the-us
+
+Risks
+1.	New team that has never worked together before
+a.	Team meetings at least once per week
+2.	New software to one team member
+a.	McKay will help Brenden learn skills in R to complete this analysis while building his understanding of packages required for this analysis.
+3.	Limitations of data on types of models possible
+a.	Searching for more supplementary data that may allow for other types of models
+
+
+OODA Design
