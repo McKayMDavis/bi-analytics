@@ -24,17 +24,6 @@ guns <- guns %>%
   select(-code, -X1)
 
 # Cleaning method 4: Brenden
-<<<<<<< HEAD
-# Remove bad columns
-
-
-# Profiling 1: McKay
-
-
-# Profiling 2: Brenden
-=======
 # Remove NA Values
 guns <- guns %>%
   na.omit()
-View(guns)
->>>>>>> 41827bcbf97a149aa27df37c3d51a49625f32937
