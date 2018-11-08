@@ -15,14 +15,16 @@ codes %<>%
 # Cleaning method 2: McKay
 # Join codes on guns
 guns %<>%
-  rename(code = hispanic) %>% 
+  rename(code = hispanic) %>%
   merge(codes)
 
 # Cleaning method 3: Brenden
-# Remove NA values
-
+# Remove bad columns
+guns <- guns %>%
+  select(-code, -X1)
 
 # Cleaning method 4: Brenden
+<<<<<<< HEAD
 # Remove bad columns
 
 
@@ -30,3 +32,9 @@ guns %<>%
 
 
 # Profiling 2: Brenden
+=======
+# Remove NA Values
+guns <- guns %>%
+  na.omit()
+View(guns)
+>>>>>>> 41827bcbf97a149aa27df37c3d51a49625f32937
