@@ -37,7 +37,7 @@ count_gundeath <- guns %>%
   rename(count = `n()`)
 
 # Profiling method 2: McKay
-# 
+# Summary of deaths by intent and race (only Suicide and Homicide)
 stuff <- guns %>% 
   filter(intent %in% c("Homicide", "Suicide")) %>% 
   group_by(intent, race) %>% 
