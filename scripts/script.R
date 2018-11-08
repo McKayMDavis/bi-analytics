@@ -15,7 +15,7 @@ codes %<>%
 # Cleaning method 2: McKay
 # Join codes on guns
 guns %<>%
-  rename(code = hispanic) %>%
+  rename(code = hispanic) %>% 
   merge(codes)
 
 # Cleaning method 3: Brenden
@@ -27,4 +27,3 @@ guns <- guns %>%
 # Remove NA Values
 guns <- guns %>%
   na.omit()
-View(guns)
