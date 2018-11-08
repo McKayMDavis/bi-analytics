@@ -27,3 +27,10 @@ guns <- guns %>%
 # Remove NA Values
 guns <- guns %>%
   na.omit()
+
+# Profiling method 1: Brenden
+# Summary Table
+count_gundeath <- guns %>%
+  group_by(year, month) %>%
+  summarise(n()) %>%
+  rename(count = `n()`)
