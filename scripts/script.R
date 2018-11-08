@@ -24,3 +24,9 @@ guns %<>%
 
 # Cleaning method 4: Brenden
 # Remove bad columns
+
+
+# Profiling 1: McKay
+
+
+# Profiling 2: Brenden
