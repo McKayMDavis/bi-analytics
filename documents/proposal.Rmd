@@ -1,76 +1,214 @@
 ---
 title: "BI/Analytics Project"
-output: pdf_document
+output:
+  html_document:
+    code_folding: hide
+    theme: united
+    df_print: paged
 ---
 
-Deliverables
+# Proposal
+<hr/>
+
+## Deliverables
 Week 7:
-1.	Project Proposal
-a.	Together
-2.	Design Document
-a.	Brenden
-3.	Ensure installation of R is possible
-a.	McKay
-4.	Risks
-a.	McKay
+
+1. Project Proposal
+    + Together
+2. Design Document
+    + Brenden
+3. Ensure installation of R is possible
+    + McKay
+4. Risks
+    + McKay
 
 Week 8:
-1.	2 cleaning methods each
-a.	Filtering (NA’s etc)
-i.	Brenden
-b.	Remove unnecessary columns
-i.	Brenden
-c.	Editing ambiguous columns
-i.	McKay
-d.	Joins
-i.	McKay
+
+1.  two cleaning methods each
+    + Filtering (NA’s etc)
+        + Brenden
+    + Remove unnecessary columns
+        + Brenden
+    + Prepping secondary data for joins
+        + McKay
+    + Joins
+        + McKay
 2.	1 profiling example each
-a.	Sub-setting
-i.	Brenden
-b.	Stats tables
-i.	McKay
+    + Summary of deaths by year and month
+        + Brenden
+    + Summary of deaths by intent (homicide and suicide) and race
+        + McKay
 3.	Installing R and RStudio
 4.	Learning basics of R
 5.	Pros and cons of cleaning and profiling in R
-a.	Together
+    + McKay
 6.	List of things we learned
 
 Week 9:
+
 1.	Write up pros and cons of R to Excel
 2.	2 patterns/visualizations/outliers each
-a.	Pairs plots
-i.	McKay
-b.	Boxplots
-i.	McKay
-c.	Bar-charts
-i.	Brenden
-d.	Outliers
-i.	Brenden
+    + Pairs plots
+        + McKay
+    + Boxplots
+        + McKay
+    + Bar-charts
+        + Brenden
+    + Outliers
+        + Brenden
 3.	Pros and cons
 4.	List of things we learned
 
 Week 10:
+
 1.	Pros and cons of R
 2.	List of things we learned
 3.	1 optimizing/forecasting/predicting model each
-a.	Trend prediction (shootings increasing by year in certain areas/races)
-i.	Brenden
-b.	Full regression analysis
-i.	McKay
+    + Trend prediction (shootings increasing by year in certain areas/races)
+        + Brenden
+    + Full regression analysis
+        + McKay
 
-Description of Problem
+## Description of Problem
+
 With the hot topic of gun related crimes, we wanted to look at variables that contribute to a person being killed by a gun. We were specifically curious to look at school shootings, race fueled shootings, age, gender, etc.
 
-Dataset
+## Dataset
+
 https://www.kaggle.com/hakabuk/gun-deaths-in-the-us
 
-Risks
+## Risks
+
 1.	New team that has never worked together before
-a.	Team meetings at least once per week
+    + Team meetings at least once per week
 2.	New software to one team member
-a.	McKay will help Brenden learn skills in R to complete this analysis while building his understanding of packages required for this analysis.
+    + McKay will help Brenden learn skills in R to complete this analysis while building his understanding of packages required for this analysis.
 3.	Limitations of data on types of models possible
-a.	Searching for more supplementary data that may allow for other types of models
+    + Searching for more supplementary data that may allow for other types of models
+
+## OODA Design
+
+![](../images/ooda.png)
+
+# Week 8
+<hr/>
+
+## Work Done
+
+### R Tutorials (Brenden)
+
+Extensive textbook available free online. I will continue to use this as a reference to questions I have.
+[link](https://r4ds.had.co.nz/)
+Basic functions, operators, etc.
+[link](https://www.statmethods.net/r-tutorial/index.html)
+Downloaded “swirl” tutorial in R and followed along in Rstudio. It taught me the basic operators and some functions. It taught me the basics of how statements work like how <- applies the following function to the object to the left of it.
+McKay is experienced in R and has showed me a lot including some pipe statements, how to connect our scripts through git, and some neat functions like merge, summarise, and omit. We also learned together that the %<>% pipe statement might only work on the first line when there are multiple lines or another pipe beneath it.
 
 
-OODA Design
+
+### Regression Research and Pros/Cons (McKay)
+
+1.	Regression Research
+    + We are probably going to need to run a chi-squared test as the y variable is likely going to be categorical and non-binary. [click for source](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/)
+2.	Pros and Cons of R to Excel for cleaning and profiling
+    + Pros
+        + R code is modular and syntactically simple
+        + R is capable of handling larger data sets with far greater speed
+        + The user cannot physically touch the data and only touches states of the data, so there is not much room for accidentally deleting important things in the data.
+        + R has many more tools available to it than Excel.
+        + R is open source.
+        + Streamlined data merges.
+    + Cons
+        + Data cannot be directly modified in its tabular form. This is difficult for beginners.
+        + Pivot tables don’t exist (although similar summaries of any kind can be created with relative ease).
+        + Excel is initially easier to use as most people have been exposed to similar Microsoft UI’s since they were five or from its inception.
+
+## Week 8 Description of What We Did:
+
+### Edits to Project Proposal:
+
+1.	Changed cleaning methods and profiling to reflect what was needed
+2.	Edited pros/cons to be McKay’s task (we still did some together)
+
+### Methods:
+
+We used the tidyverse package in R for reading in the data and cleaning it. We used different methods included in the package. During the cleaning process, we noticed an interesting column called `code` which ended up being a CDC code for the country of origin for hispanic people. We obtained a list of these codes and joined that with the original data.
+
+Below is our code and outputs (Click toggle buttons on right to see code):
+
+#### Setup
+
+```{r, message=FALSE, warning=FALSE}
+# libraries
+library(tidyverse)
+library(DT)
+library(pander)
+
+# Read in some data
+guns <- read_csv("../data/guns.csv")
+codes <- read_csv("../data/cdc_codes.csv", col_names = FALSE)
+```
+
+
+#### Original Data Samples
+
+```{r, message=FALSE, warning=FALSE}
+datatable(head(guns), options = list(dom = 't'))
+datatable(head(codes), options = list(dom = 't'))
+```
+
+
+#### Cleaning Methods and Sample Clean Data
+
+```{r, message=FALSE, warning=FALSE}
+# Cleaning method 1: McKay
+# Format codes data for joining on guns data
+codes %<>%
+  mutate(code = str_extract(X1, "[0-9]+"), 
+         X1 = gsub("[0-9]+\\s", "", X1)) %>% 
+  rename(type = X1)
+
+# Cleaning method 2: McKay
+# Join codes on guns
+guns %<>%
+  rename(code = hispanic) %>% 
+  merge(codes)
+
+# Cleaning method 3: Brenden
+# Remove bad columns
+guns <- guns %>%
+  select(-code, -X1)
+
+# Cleaning method 4: Brenden
+# Remove NA Values
+guns <- guns %>%
+  na.omit()
+
+datatable(head(guns), options = list(dom = 't'))
+```
+
+
+#### Profiling Methods
+
+```{r, message=FALSE, warning=FALSE}
+# Profiling method 1: Brenden
+# Summary Table
+count_gundeath <- guns %>%
+  group_by(year, month) %>%
+  summarise(n()) %>%
+  rename(count = `n()`)
+
+pander(count_gundeath)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# Profiling method 2: McKay
+# Summary of deaths by intent and race (only Suicide and Homicide)
+intents <- guns %>% 
+  filter(intent %in% c("Homicide", "Suicide")) %>% 
+  group_by(intent, race) %>% 
+  summarise(count = n())
+
+pander(intents)
+```
+

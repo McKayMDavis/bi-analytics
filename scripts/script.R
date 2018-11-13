@@ -1,5 +1,4 @@
 library(tidyverse)
-source("./scripts/write_to_images.R")
 
 
 # Read in some data
@@ -38,17 +37,7 @@ count_gundeath <- guns %>%
 
 # Profiling method 2: McKay
 # Summary of deaths by intent and race (only Suicide and Homicide)
-stuff <- guns %>% 
+intents <- guns %>% 
   filter(intent %in% c("Homicide", "Suicide")) %>% 
   group_by(intent, race) %>% 
   summarise(count = n())
-
-
-
-
-
-
-
-# Write outputs
-make_img(count_gundeath, "deaths_by_year_month.png")
-make_img(stuff, "deaths_by_intent_race.png")
