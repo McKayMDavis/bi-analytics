@@ -107,7 +107,7 @@ guns %>%
   scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
 
 # Visualization 4: Brenden
-# Line Chart 2: Count of deaths by race
+# Line Chart 2: Count of deaths by race AND pie chart of intent
 
 guns %>%
   mutate(date = zoo::as.Date(date)) %>%
@@ -122,3 +122,8 @@ guns %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
 
+pie_guns <- guns %>%
+  group_by(intent) %>%
+  summarise(count = n())
+  
+pie(pie_guns$count, pie_guns$intent)
