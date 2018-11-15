@@ -4051,11 +4051,11 @@ codes &lt;- read_csv(&quot;../data/cdc_codes.csv&quot;, col_names = FALSE)</code
 <div id="original-data-samples" class="section level4">
 <h4>Original Data Samples</h4>
 <pre class="r"><code>datatable(head(guns), options = list(dom = 't'))</code></pre>
-<div id="htmlwidget-c38f674fbf9a27985338" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c38f674fbf9a27985338">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[1,2,3,4,5,6],[2012,2012,2012,2012,2012,2012],["01","01","01","02","02","02"],["Suicide","Suicide","Suicide","Suicide","Suicide","Suicide"],[0,0,0,0,0,0],["M","F","M","M","M","M"],[34,21,60,64,31,17],["Asian/Pacific Islander","White","White","White","White","Native American/Native Alaskan"],[100,100,100,100,100,100],["Home","Street","Other specified","Home","Other specified","Home"],[4,3,4,4,2,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>X1<\/th>\n      <th>year<\/th>\n      <th>month<\/th>\n      <th>intent<\/th>\n      <th>police<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>race<\/th>\n      <th>hispanic<\/th>\n      <th>place<\/th>\n      <th>education<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,5,7,9,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1e5b57d30dc4a926bf2f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1e5b57d30dc4a926bf2f">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[1,2,3,4,5,6],[2012,2012,2012,2012,2012,2012],["01","01","01","02","02","02"],["Suicide","Suicide","Suicide","Suicide","Suicide","Suicide"],[0,0,0,0,0,0],["M","F","M","M","M","M"],[34,21,60,64,31,17],["Asian/Pacific Islander","White","White","White","White","Native American/Native Alaskan"],[100,100,100,100,100,100],["Home","Street","Other specified","Home","Other specified","Home"],[4,3,4,4,2,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>X1<\/th>\n      <th>year<\/th>\n      <th>month<\/th>\n      <th>intent<\/th>\n      <th>police<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>race<\/th>\n      <th>hispanic<\/th>\n      <th>place<\/th>\n      <th>education<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,5,7,9,11]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>datatable(head(codes), options = list(dom = 't'))</code></pre>
-<div id="htmlwidget-05fb108648b59f36618d" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-05fb108648b59f36618d">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["100 Non-Hispanic","200  Spaniard","201  Andalusian","202  Asturian","203  Castillian","204  Catalonian"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>X1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-98498172d32e273c90b1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-98498172d32e273c90b1">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["100 Non-Hispanic","200  Spaniard","201  Andalusian","202  Asturian","203  Castillian","204  Catalonian"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>X1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="cleaning-methods-and-sample-clean-data" class="section level4">
 <h4>Cleaning Methods and Sample Clean Data</h4>
@@ -4083,8 +4083,8 @@ guns &lt;- guns %&gt;%
   na.omit()
 
 datatable(head(guns), options = list(dom = 't'))</code></pre>
-<div id="htmlwidget-bcf50e2cd40bba97c0fd" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bcf50e2cd40bba97c0fd">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[2012,2012,2012,2012,2012,2012],["01","01","01","02","02","02"],["Suicide","Suicide","Suicide","Suicide","Suicide","Suicide"],[0,0,0,0,0,0],["M","F","M","M","M","M"],[34,21,60,64,31,17],["Asian/Pacific Islander","White","White","White","White","Native American/Native Alaskan"],["Home","Street","Other specified","Home","Other specified","Home"],[4,3,4,4,2,1],["Non-Hispanic","Non-Hispanic","Non-Hispanic","Non-Hispanic","Non-Hispanic","Non-Hispanic"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>month<\/th>\n      <th>intent<\/th>\n      <th>police<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>race<\/th>\n      <th>place<\/th>\n      <th>education<\/th>\n      <th>type<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,4,6,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1f3709ee5f96471c0ecd" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1f3709ee5f96471c0ecd">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],[2012,2012,2012,2012,2012,2012],["01","01","01","02","02","02"],["Suicide","Suicide","Suicide","Suicide","Suicide","Suicide"],[0,0,0,0,0,0],["M","F","M","M","M","M"],[34,21,60,64,31,17],["Asian/Pacific Islander","White","White","White","White","Native American/Native Alaskan"],["Home","Street","Other specified","Home","Other specified","Home"],[4,3,4,4,2,1],["Non-Hispanic","Non-Hispanic","Non-Hispanic","Non-Hispanic","Non-Hispanic","Non-Hispanic"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>year<\/th>\n      <th>month<\/th>\n      <th>intent<\/th>\n      <th>police<\/th>\n      <th>sex<\/th>\n      <th>age<\/th>\n      <th>race<\/th>\n      <th>place<\/th>\n      <th>education<\/th>\n      <th>type<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,4,6,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="profiling-methods" class="section level4">
 <h4>Profiling Methods</h4>
@@ -4367,6 +4367,15 @@ pander(intents)</code></pre>
 </tbody>
 </table>
 </div>
+</div>
+</div>
+<div id="week-9-description-of-what-we-did" class="section level2">
+<h2>Week 9 Description of What We Did</h2>
+<div id="links-to-training-material" class="section level3">
+<h3>Links to Training Material</h3>
+<ul>
+<li>(<a href="https://www.r-graph-gallery.com" class="uri">https://www.r-graph-gallery.com</a>)</li>
+</ul>
 </div>
 </div>
 </div>

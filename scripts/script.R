@@ -16,7 +16,15 @@ codes %<>%
 # Join codes on guns
 guns %<>%
   rename(code = hispanic) %>% 
-  merge(codes)
+  merge(codes) %>% 
+  mutate(date = zoo::as.yearmon(paste0(year, "-", month)),
+         is_minority = case_when(race != "White" ~ "Minority",
+                                 race == "White" ~ "White")) %>% 
+  mutate(education2 = case_when(education == 1 ~ "Less Than Highschool",
+                                education == 2 ~ "Graduated From Highschool or equivalent",
+                                education == 3 ~ "Some College",
+                                education == 4 ~ "At Least College Graduate",
+                                education == 5 ~ "Unknown"))
 
 # Cleaning method 3: Brenden
 # Remove bad columns
@@ -43,30 +51,74 @@ intents <- guns %>%
   summarise(count = n())
 
 # Visualization 1: McKay
-# Pairs Plots
+# Minority vs intent
+p1 <- guns %>% 
+  group_by(date, is_minority, intent) %>% 
+  summarise(count = n()) %>% 
+  filter(intent %in% c("Homicide", "Suicide")) %>% 
+  ggplot(aes(x = date, y = count, color = intent, group = intent)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~is_minority) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set2") +
+  labs(y = "Number of Gun Deaths",
+       x = "Date",
+       color = "Intent",
+       title = "Number of Deaths between Minority and White by Intent")
+
+plotly::ggplotly(p1, tooltip = c("y", "x"))
 
 #Visualization 2: McKay
-# Box Plots
+# Education vs intent
+
+guns %>% 
+  group_by(date, education2, intent) %>% 
+  filter(intent %in% c("Homicide", "Suicide"),
+         education != 5) %>% 
+  summarise(count = n()) %>%
+  ggplot(aes(x = date, y = count, color = education2, group = education2)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~intent) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set2") +
+  labs(y = "Number of Gun Deaths",
+       x = "Date",
+       color = "Education Level",
+       title = "Number of Deaths by Suicide Proportionately Higher for Higher Educated People")
 
 # Visualization 3: Brenden
-# line Charts
+# line Charts: Count deaths by Intent
 
 guns %>%
-  mutate(date = paste0(month, "-", year)) %>%
+  mutate(date = zoo::as.Date(date)) %>%
   group_by(date, intent) %>%
   summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(intent) %>% 
+  mutate(avg = mean(count)) %>% 
   ggplot(aes(x = date, y = count, color = intent, group = intent)) +
   geom_line() + geom_point() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  geom_line(aes(y = avg), color = "black") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
 
 # Visualization 4: Brenden
-# Line Chart 2
+# Line Chart 2: Count of deaths by race
 
 guns %>%
-  mutate(date = paste0(month, "-", year)) %>%
+  mutate(date = zoo::as.Date(date)) %>%
   group_by(date, race) %>%
   summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(race) %>% 
+  mutate(avg = mean(count)) %>% 
   ggplot(aes(x = date, y = count, color = race, group = race)) +
   geom_line() + geom_point() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  geom_line(aes(y = avg), color = "black") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
 

@@ -212,3 +212,10 @@ intents <- guns %>%
 pander(intents)
 ```
 
+
+## Week 9 Description of What We Did
+
+### Links to Training Material
+
+* (https://www.r-graph-gallery.com)
+* (https://ggplot2.tidyverse.org)
