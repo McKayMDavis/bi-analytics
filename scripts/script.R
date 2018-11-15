@@ -41,3 +41,32 @@ intents <- guns %>%
   filter(intent %in% c("Homicide", "Suicide")) %>% 
   group_by(intent, race) %>% 
   summarise(count = n())
+
+# Visualization 1: McKay
+# Pairs Plots
+
+#Visualization 2: McKay
+# Box Plots
+
+# Visualization 3: Brenden
+# line Charts
+
+guns %>%
+  mutate(date = paste0(month, "-", year)) %>%
+  group_by(date, intent) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = date, y = count, color = intent, group = intent)) +
+  geom_line() + geom_point() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# Visualization 4: Brenden
+# Line Chart 2
+
+guns %>%
+  mutate(date = paste0(month, "-", year)) %>%
+  group_by(date, race) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = date, y = count, color = race, group = race)) +
+  geom_line() + geom_point() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
