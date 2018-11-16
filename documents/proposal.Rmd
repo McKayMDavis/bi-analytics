@@ -231,7 +231,7 @@ For our visualizations, we used the `ggplot2` package in R (part of the `tidyver
 
 #### McKay's Visualizations
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 guns %<>%
   mutate(date = zoo::as.yearmon(paste0(year, "-", month)),
          is_minority = case_when(race != "White" ~ "Minority",
@@ -244,7 +244,7 @@ guns %<>%
 ```
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 guns %>% 
   group_by(date, is_minority, intent) %>% 
   summarise(count = n()) %>% 
@@ -262,7 +262,7 @@ guns %>%
        title = "Number of Deaths between Minority and White by Intent")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 guns %>% 
   group_by(date, education2, intent) %>% 
   filter(intent %in% c("Homicide", "Suicide"),
@@ -284,7 +284,7 @@ guns %>%
 
 #### Brenden's Visualizations
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 guns %>%
   mutate(date = zoo::as.Date(date)) %>%
   group_by(date, intent) %>%
@@ -299,7 +299,7 @@ guns %>%
   scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 guns %>%
   mutate(date = zoo::as.Date(date)) %>%
   group_by(date, race) %>%
@@ -314,7 +314,7 @@ guns %>%
   scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 pie_guns <- guns %>%
   group_by(intent) %>%
   summarise(count = n())
