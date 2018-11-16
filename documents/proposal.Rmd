@@ -140,7 +140,6 @@ Below is our code and outputs (Click toggle buttons on right to see code):
 library(tidyverse)
 library(DT)
 library(pander)
-library(plotly)
 
 # Read in some data
 guns <- read_csv("../data/guns.csv")
@@ -228,7 +227,7 @@ After spending a couple weeks with R, I have found some Pros and Cons with R as 
 
 ### Methods:
 
-For our visualizations, we used the `ggplot2` package in R (part of the `tidyverse` created by Hadley Wickham). This package lends a myriad of useful tools for controlling every aspect of a plot. We also incorporated some base-graphics stuff with our pie chart, as well as interactive plots using `plotly`. We largely worked on these together. We had to do a little more cleaning to make this work.
+For our visualizations, we used the `ggplot2` package in R (part of the `tidyverse` created by Hadley Wickham). This package lends a myriad of useful tools for controlling every aspect of a plot. We also incorporated some base-graphics stuff with our pie chart, as well as interactive plots using `plotly` (Unfortunately these won't work without being dynamically hosted). We largely worked on these together. We had to do a little more cleaning to make this work.
 
 #### McKay's Visualizations
 
@@ -246,7 +245,7 @@ guns %<>%
 
 
 ```{r}
-p1 <- guns %>% 
+guns %>% 
   group_by(date, is_minority, intent) %>% 
   summarise(count = n()) %>% 
   filter(intent %in% c("Homicide", "Suicide")) %>% 
@@ -261,12 +260,10 @@ p1 <- guns %>%
        x = "Date",
        color = "Intent",
        title = "Number of Deaths between Minority and White by Intent")
-
-ggplotly(p1, tooltip = c("y", "x"))
 ```
 
 ```{r}
-p2 <- guns %>% 
+guns %>% 
   group_by(date, education2, intent) %>% 
   filter(intent %in% c("Homicide", "Suicide"),
          education != 5) %>% 
@@ -283,8 +280,6 @@ p2 <- guns %>%
        x = "Date",
        color = "Education Level",
        title = "Number of Deaths by Suicide Proportionately Higher for Higher Educated People")
-
-ggplotly(p2)
 ```
 
 #### Brenden's Visualizations
