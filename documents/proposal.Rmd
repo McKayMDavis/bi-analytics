@@ -6,6 +6,10 @@ output:
     theme: united
     df_print: paged
 ---
+<!--
+Document Hosted Here:
+http://htmlpreview.github.io/?https://github.com/McKayMDavis/bi-analytics/blob/master/documents/proposal.html
+-->
 
 # Proposal
 <hr/>
@@ -48,14 +52,7 @@ Week 9:
 
 1.	Write up pros and cons of R to Excel
 2.	2 patterns/visualizations/outliers each
-    + Pairs plots
-        + McKay
-    + Boxplots
-        + McKay
-    + Bar-charts
-        + Brenden
-    + Outliers
-        + Brenden
+    + Explorations of different variables in line graphs
 3.	Pros and cons
 4.	List of things we learned
 
@@ -143,6 +140,7 @@ Below is our code and outputs (Click toggle buttons on right to see code):
 library(tidyverse)
 library(DT)
 library(pander)
+library(plotly)
 
 # Read in some data
 guns <- read_csv("../data/guns.csv")
@@ -215,7 +213,117 @@ pander(intents)
 
 ## Week 9 Description of What We Did
 
-### Links to Training Material
+### Edits to Project Proposal:
+
+This week, we simply re-evaluated what types of charts were possible. We ended up doing line graphs but exploring different variables. We also did one pie chart.
+
+### Links to Training Material:
 
 * (https://www.r-graph-gallery.com)
 * (https://ggplot2.tidyverse.org)
+
+### Pros/Cons:
+
+After spending a couple weeks with R, I have found some Pros and Cons with R as opposed to using Excel. One is that R has a much steeper learning curve but that once learned, can be quicker at doing many tasks than excel can. One of the biggest Pros that I found with R so far is that when you run functions it actually writes the information into the outcome. You can’t do this in excel very easily. For example, the functions in excel are referential and has to reference a cell that continues to exist as long as you want that function to operate properly. In R, as long as your dataset exists somewhere in your project, your script will be able to use the data in your functions. I have also seen that R is much faster at calculating data than excel typically is.
+
+### Methods:
+
+For our visualizations, we used the `ggplot2` package in R (part of the `tidyverse` created by Hadley Wickham). This package lends a myriad of useful tools for controlling every aspect of a plot. We also incorporated some base-graphics stuff with our pie chart, as well as interactive plots using `plotly`. We largely worked on these together. We had to do a little more cleaning to make this work.
+
+#### McKay's Visualizations
+
+```{r}
+guns %<>%
+  mutate(date = zoo::as.yearmon(paste0(year, "-", month)),
+         is_minority = case_when(race != "White" ~ "Minority",
+                                 race == "White" ~ "White")) %>% 
+  mutate(education2 = case_when(education == 1 ~ "Less Than Highschool",
+                                education == 2 ~ "Graduated From Highschool or equivalent",
+                                education == 3 ~ "Some College",
+                                education == 4 ~ "At Least College Graduate",
+                                education == 5 ~ "Unknown"))
+```
+
+
+```{r}
+p1 <- guns %>% 
+  group_by(date, is_minority, intent) %>% 
+  summarise(count = n()) %>% 
+  filter(intent %in% c("Homicide", "Suicide")) %>% 
+  ggplot(aes(x = date, y = count, color = intent, group = intent)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~is_minority) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set2") +
+  labs(y = "Number of Gun Deaths",
+       x = "Date",
+       color = "Intent",
+       title = "Number of Deaths between Minority and White by Intent")
+
+ggplotly(p1, tooltip = c("y", "x"))
+```
+
+```{r}
+p2 <- guns %>% 
+  group_by(date, education2, intent) %>% 
+  filter(intent %in% c("Homicide", "Suicide"),
+         education != 5) %>% 
+  summarise(count = n()) %>%
+  ungroup() %>% 
+  ggplot(aes(x = date, y = count, color = education2, group = education2)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~intent) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set2") +
+  labs(y = "Number of Gun Deaths",
+       x = "Date",
+       color = "Education Level",
+       title = "Number of Deaths by Suicide Proportionately Higher for Higher Educated People")
+
+ggplotly(p2)
+```
+
+#### Brenden's Visualizations
+
+```{r}
+guns %>%
+  mutate(date = zoo::as.Date(date)) %>%
+  group_by(date, intent) %>%
+  summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(intent) %>% 
+  mutate(avg = mean(count)) %>% 
+  ggplot(aes(x = date, y = count, color = intent, group = intent)) +
+  geom_line() + geom_point() +
+  geom_line(aes(y = avg), color = "black") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
+```
+
+```{r}
+guns %>%
+  mutate(date = zoo::as.Date(date)) %>%
+  group_by(date, race) %>%
+  summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(race) %>% 
+  mutate(avg = mean(count)) %>% 
+  ggplot(aes(x = date, y = count, color = race, group = race)) +
+  geom_line() + geom_point() +
+  geom_line(aes(y = avg), color = "black") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_x_date(date_labels = "%b %y",date_breaks = "1 month")
+```
+
+```{r}
+pie_guns <- guns %>%
+  group_by(intent) %>%
+  summarise(count = n())
+  
+pie(pie_guns$count, pie_guns$intent)
+```
+
