@@ -128,3 +128,27 @@ pie_guns <- guns %>%
   summarise(count = n())
   
 pie(pie_guns$count, pie_guns$intent)
+
+
+# Optimization 1:
+
+guns_an <- guns %>%
+  mutate(unique_id = 1:99343) %>% 
+  mutate(yesno = 1) %>%
+  distinct %>%
+  spread(intent, yesno, fill = 0) %>% 
+  mutate(is_minority2 = case_when(is_minority == "Minority" ~ 1,
+                                  is_minority == "White" ~ 0))
+
+
+guns_glm <- glm(is_minority2 ~ Accidental + Homicide + Suicide + Undetermined,
+                data = guns_an,family = binomial("logit"))
+
+
+# Optimization 2:
+
+guns_chi <- chisq.test(guns$intent, guns$race)
+
+guns_chi
+
+guns_chi$observed
