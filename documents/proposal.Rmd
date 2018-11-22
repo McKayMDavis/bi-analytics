@@ -215,7 +215,8 @@ pander(intents)
 ```
 
 
-## Week 9 Description of What We Did
+# Week 9
+<hr/>
 
 ### Edits to Project Proposal:
 
@@ -326,4 +327,67 @@ pie_guns <- guns %>%
   
 pie(pie_guns$count, pie_guns$intent)
 ```
+
+# Week 10
+<hr/>
+
+### Edits to Project Proposal
+
+1. Brenden did logistic regression
+2. McKay did Chi-Square test
+
+### Links to Training Materials
+
+1. https://proquestcombo-safaribooksonline-com.byui.idm.oclc.org/book/databases/9781118661468/10-moving-from-spreadsheets-into-r/chap10_sec004_html
+
+2. http://www.sthda.com/english/wiki/chi-square-test-of-independence-in-r
+
+### Pros/Cons
+
+1. Pros
+    + Substantially more tools to choose from
+    + Readily available packages and algorithms
+    + Time to run same analysis is not even comparable--R is much faster
+    + Capable of analyzing substantially more rows of data without slowing down
+2. Cons
+    + Must learn programming language
+  
+### Methods
+
+We had to ponder our data for a bit to understand what we could do with it. We ended up running a logistic regression on the race (minority or not) as the y variable and intent as the x variable. We also used Chi-Square to show us a break down of the different races when compared with intent. The two analyses show similar results.
+
+### Logistic Regression
+
+```{r, message=FALSE, warning=FALSE}
+guns_an <- guns %>%
+  mutate(is_minority2 = case_when(is_minority == "Minority" ~ 1,
+                                  is_minority == "White" ~ 0))
+
+
+guns_glm <- glm(is_minority2 ~ intent,
+                    data = guns_an,family = binomial("logit"))
+
+pander(summary(guns_glm))
+```
+
+Based on the above results, we could conclude that Accidental, Homicide, and Suicide are all significant predictors of race. This is kind of a weird conclusion when you think about it. What this means is that if a person committed suicide, we might be able to predict their race accurately with this model.
+
+### Chi-Square
+
+```{r}
+guns_chi <- chisq.test(guns$intent, guns$race)
+pander(guns_chi)
+```
+
+The results of the Chi-Square test indicate that some variable combinations have significantly higher counts than the others. If we look at the breakdown below, we can see which ones.
+
+```{r}
+pander(guns_chi$observed)
+```
+  
+Whites have a count of 55363 for suicide, which is over 10 times more than the next highest count. Blacks have a count of 19145 for homicide, which is over 5 times more than the next highest. This means that if we were to get word of a suicide, we might (within some level of error) accurately predict that it is a white person that has died.
+
+### Conclusion
+
+Are these ethical variables to look at when conducting this type of study? Probably not, however we were able to find significant differences and predictors within the data, which was pretty cool.
 
